@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -68,5 +69,85 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToFacebookProvider()
+    {
+        return Socialite::driver('facebook')
+            ->scopes(['scope1', 'scope2']) //request this scope(s) of data
+            ->with(['hd' => 'example.com']) //passing optional params
+            ->redirect();
+    }
+
+    /**
+     * Redirect the user to the Twitter authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToTwitterProvider()
+    {
+        return Socialite::driver('twitter')
+            ->scopes(['scope1', 'scope2']) //request this scope(s) of data
+            ->with(['hd' => 'example.com']) //passing optional params
+            ->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function handleFacebookProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+
+        // do something with the returned user data, ex.:
+        // OAuth Two Providers
+//        $token = $user->token;
+//        $refreshToken = $user->refreshToken; // not always provided
+//        $expiresIn = $user->expiresIn;
+
+        // OAuth One Providers
+//        $token = $user->token;
+//        $tokenSecret = $user->tokenSecret;
+
+        // All Providers
+//        $user->getId();
+//        $user->getNickname();
+//        $user->getName();
+//        $user->getEmail();
+//        $user->getAvatar();
+    }
+
+    /**
+     * Obtain the user information from Twitter.
+     *
+     * @return Response
+     */
+    public function handleTwitterProviderCallback()
+    {
+        $user = Socialite::driver('twitter')->user();
+
+        // do something with the returned user data, ex.:
+        // OAuth Two Providers
+//        $token = $user->token;
+//        $refreshToken = $user->refreshToken; // not always provided
+//        $expiresIn = $user->expiresIn;
+
+        // OAuth One Providers
+//        $token = $user->token;
+//        $tokenSecret = $user->tokenSecret;
+
+        // All Providers
+//        $user->getId();
+//        $user->getNickname();
+//        $user->getName();
+//        $user->getEmail();
+//        $user->getAvatar();
     }
 }

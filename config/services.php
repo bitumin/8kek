@@ -39,4 +39,18 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    /*
+     * OAuth services tokens
+     */
+    'facebook' => [
+        'client_id' => 'your-github-app-id',
+        'client_secret' => 'your-github-app-secret',
+        'redirect' => 'http://your-callback-url',
+    ],
+    'twitter' => [
+        'client_id' => 'your-github-app-id',
+        'client_secret' => 'your-github-app-secret',
+        'redirect' => 'http://your-callback-url',
+    ],
+
 ];

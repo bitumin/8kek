@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('auth/twitter', 'Auth\AuthController@redirectToTwitterProvider');
+Route::get('auth/twitter/callback', 'Auth\AuthController@handleTwitterProviderCallback');
+Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebookProvider');
+Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookProviderCallback');
