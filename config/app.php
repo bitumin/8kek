@@ -161,7 +161,9 @@ return [
         /*
          * Third-party Service Providers...
          */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class, //Laravel IDE helper
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class, //Laravel IDE helper (added in app/Providers/AppServiceProvider.php)
+        Intervention\Image\ImageServiceProvider::class, //Image manipulation
+        //Barryvdh\Debugbar\ServiceProvider::class, //Laravel debug bar (added in app/Providers/AppServiceProvider.php)
     ],
 
     /*
@@ -208,6 +210,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Third-party facades
+         */
+        'Image' => Intervention\Image\Facades\Image::class, //Image manipulation
+        'Debugbar' => Barryvdh\Debugbar\Facade::class, //Laravel debug bar
     ],
 
 ];
