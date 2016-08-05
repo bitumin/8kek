@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Socialite;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -32,6 +33,13 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * Field from the login request to validate together with the password field.
+     *
+     * @var string
+     */
+    protected $username = 'login';
+
+    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -50,10 +58,25 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
+    }
+
+    /**
+     * Get the needed authorization credentials from the login request.
+     * Overloads AuthenticatesUsers method to allow login both with username or password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        $loginFieldValue = $request->get('login');
+        $loginFieldName = filter_var($loginFieldValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+
+        return [$loginFieldName => $loginFieldValue, 'password' => $request->get('password')];
     }
 
     /**
