@@ -165,6 +165,7 @@ return [
         //Barryvdh\Debugbar\ServiceProvider::class, //Laravel debug bar, loaded via app/Providers/AppServiceProvider.php
         Intervention\Image\ImageServiceProvider::class, //Image manipulation
         Laravel\Socialite\SocialiteServiceProvider::class, //OAuth interface
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class, //Recaptcha for registration
     ],
 
     /*
@@ -217,6 +218,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class, //Image manipulation
         'Debugbar' => Barryvdh\Debugbar\Facade::class, //Laravel debug bar
         'Socialite' => Laravel\Socialite\Facades\Socialite::class, //OAuth interface
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class, //Recaptcha for login
     ],
 
 ];

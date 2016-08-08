@@ -11,15 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('auth/twitter', 'Auth\AuthController@redirectToTwitterProvider');
-Route::get('auth/twitter/callback', 'Auth\AuthController@handleTwitterProviderCallback');
-Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebookProvider');
-Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookProviderCallback');
-
+Route::get('/', ['as' => 'home', 'uses' => 'MainController@home']);
 Route::auth();
+Route::get('services/available/name', ['as' => 'services.available.name', 'uses' => 'MainController@nameIsAvailable']);
+Route::get('services/available/email', ['as' => 'services.available.email', 'uses' => 'MainController@emailIsAvailable']);
 
-Route::get('/home', 'HomeController@index');
+/*
+ |--------------------------------------------------------------------------
+ | SOCIAL LOGIN
+ |--------------------------------------------------------------------------
+ |
+ | Don't forget to fill the apps ID and SECRET fields in .env.
+ | To register new apps and obtain their ID/SECRET codes, visit their corresponding webs:
+ | https://developers.facebook.com/apps
+ | https://apps.twitter.com/app/new
+ */
+Route::get('auth/facebook', ['as' => 'facebook.provider', 'uses' => 'Auth\AuthController@redirectToFacebookProvider']);
+Route::get('auth/facebook/callback', ['as' => 'facebook.callback', 'uses' => 'Auth\AuthController@handleFacebookProviderCallback']);
+Route::get('auth/twitter', ['as' => 'twitter.provider', 'uses' => 'Auth\AuthController@redirectToTwitterProvider']);
+Route::get('auth/twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Auth\AuthController@handleTwitterProviderCallback']);

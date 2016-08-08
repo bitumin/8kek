@@ -1,81 +1,110 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
+
                 <div class="panel-heading">Register</div>
+
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                    {{--Manual registration form--}}
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
+                    <form role="form" method="POST" action="{{ url('/register') }}" data-toggle="validator">
 
+                        {{--CSRF token field--}}
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        {{--Nickname field--}}
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} has-feedback">
+                            <input id="name" type="text" class="form-control input-lg" name="name" value="{{ old('name') }}"
+                                   placeholder="Trollname / Nom de guerre"
+                                   data-remote="{{ route('services.available.name') }}" data-remote-error="Trollname already taken"
+                                   pattern="^[A-Za-z0-9_]{1,20}$" data-pattern-error="Does not follow the pattern [A-Za-z0-9_]{1,20}"
+                                   required data-required-error="Trollname required"
+                                   maxlength="20">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-block with-errors">
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    {{ $errors->first('name') }}
                                 @endif
-                            </div>
+                            </span>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
+                        {{--Email address field--}}
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
+                            <input id="email" type="email" class="form-control input-lg" name="email" value="{{ old('email') }}"
+                                   placeholder="E-mail address"
+                                   data-remote="{{ route('services.available.email') }}" data-remote-error="An account with this e-mail already exists"
+                                   required data-required-error="E-mail required"
+                                   data-error="Doesn't even look like an e-mail address, try harder"
+                                   maxlength="255">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-block with-errors">
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    {{ $errors->first('email') }}
                                 @endif
-                            </div>
+                            </span>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
+                        {{--New password field--}}
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
+                            <div id="pwd-strength-bar">
+                                <div id="pwd-strength-viewport-progress"></div>
+                            </div>
+                            <input id="password-register" type="password" class="form-control input-lg" name="password"
+                                   placeholder="Password"
+                                   data-minlength="6" data-minlength-error="At least 6 characters"
+                                   required data-required-error="Password required"
+                                   maxlength="50">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-block with-errors">
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                    {{ $errors->first('password') }}
                                 @endif
-                            </div>
+                            </span>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
+                        {{--Password confirmation field--}}
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} has-feedback">
+                            <input id="password-confirm" type="password" class="form-control input-lg" name="password_confirmation"
+                                   placeholder="Confirm password"
+                                   data-match="#password-register" data-match-error="Not the same"
+                                   required data-required-error="Password confirmation required"
+                                   maxlength="50">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-block with-errors">
                                 @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
+                                    {{ $errors->first('password_confirmation') }}
                                 @endif
-                            </div>
+                            </span>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Register
-                                </button>
-                            </div>
+                        {{--Recaptcha--}}
+                        {!! Recaptcha::render() !!}
+
+                        {{--Cancel and register button--}}
+                        <div class="form-group" align="right">
+                            <button type="submit" class="btn btn-lg btn-block btn-primary">
+                                <i class="fa fa-btn fa-user-plus"></i> Sign up
+                            </button>
                         </div>
                     </form>
+
+                    {{--Social login/registration providers--}}
+                    <a href="{{ route('facebook.provider') }}" class="btn btn-block btn-social btn-facebook btn-lg">
+                        <i class="fa fa-facebook"></i> Sign up with Facebook
+                    </a>
+                    <a href="{{ route('twitter.provider') }}" class="btn btn-block btn-social btn-twitter btn-lg">
+                        <i class="fa fa-twitter"></i> Sign up with Twitter
+                    </a>
+
                 </div>
+
             </div>
+
         </div>
     </div>
 </div>

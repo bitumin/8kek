@@ -1,0 +1,29 @@
+body {
+  font-family: 'Lato', sans-serif; }
+
+.fa-btn {
+  margin-right: 6px; }
+
+#remember-me-checkbox {
+  display: inline-block;
+  margin-top: 0; }
+
+.col-right-offset-110 {
+  padding-right: 132px; }
+
+.col-fixed-right-110 {
+  position: absolute;
+  right: 0;
+  padding-right: 15px;
+  margin-right: 17px; }
+
+#pwd-strength-viewport-progress .progress {
+  margin-bottom: 0;
+  position: absolute;
+  z-index: 1001;
+  top: 18px;
+  right: 35px;
+  width: 60px;
+  height: 10px; }
+
+/*# sourceMappingURL=trollrank.css.map */
