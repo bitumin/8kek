@@ -26,4 +26,7 @@ body {
   width: 60px;
   height: 10px; }
 
+.image-container {
+  max-width: 500px; }
+
 /*# sourceMappingURL=trollrank.css.map */

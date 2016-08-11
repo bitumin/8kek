@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'MainController@home']);
 Route::auth();
+Route::get('/', ['as' => 'home', 'uses' => 'MainController@home']);
+Route::get('post/{post}', ['as' => 'post', 'uses' => 'MainController@post']);
 Route::get('services/available/name', ['as' => 'services.available.name', 'uses' => 'MainController@nameIsAvailable']);
 Route::get('services/available/email', ['as' => 'services.available.email', 'uses' => 'MainController@emailIsAvailable']);
 

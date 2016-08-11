@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Post;
+use DB;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -18,13 +20,26 @@ class MainController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application home page.
      *
      * @return \Illuminate\Http\Response
      */
     public function home()
     {
-        return view('home');
+        $posts = DB::table('posts')->orderBy('id', 'desc')->simplePaginate(6);
+
+        return view('home', ['posts' => $posts]);
+    }
+
+    /**
+     * Show an application post.
+     *
+     * @param Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function post(Post $post)
+    {
+        return view('post', ['post' => $post]);
     }
 
     public function nameIsAvailable(Request $request)

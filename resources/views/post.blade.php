@@ -1,17 +1,35 @@
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Post</h4>
+@extends('layouts.main')
+
+@section('content')
+
+    <input class="hidden" name="post-id" id="post-id" value="{{ $post->id }}">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">{{ $post->title }}</div>
+
+                    <div class="panel-body">
+
+                        <div>Posted at {{ $post->created_at }}</div>
+                        <div class="image-container">
+                            <img class="img-responsive" alt="{{ $post->title }}" src="/image/{{ $post->image }}">
+                        </div>
+                        <div>
+                            <span>{{ $post->views }} views</span> .
+                            <span>{{ $post->up }} ups</span> .
+                            <span>{{ $post->down }} downs</span>
+                        </div>
+                        <div>
+                            Comments
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+@endsection
