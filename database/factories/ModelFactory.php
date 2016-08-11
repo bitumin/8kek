@@ -14,9 +14,9 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'avatar' => 'default.jpg',
-        'name' => $faker->name,
+        'name' => $faker->userName,
         'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('test'),
         'remember_token' => str_random(10),
     ];
 });
@@ -25,8 +25,9 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
     return [
         'title' => rtrim($faker->sentence(5), '.'),
         'image' => 'test.jpg',
-        'up' => mt_rand(0,5000),
-        'down' => mt_rand(0,5000),
-        'views' => mt_rand(0,10000000),
+        'up' => mt_rand(0,1000),
+        'down' => mt_rand(0,1000),
+        'views' => mt_rand(0,10000),
+        'created_at' => $faker->dateTimeBetween('-2 years', 'now')
     ];
 });

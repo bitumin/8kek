@@ -6,7 +6,25 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
 
-                <div class="panel-heading">Last posts</div>
+                <div class="panel-heading">
+                    <div class="title">{{ $title }}</div>
+                    @if($hasSinceScopes)
+                        <div class="since-scopes">
+                            <a
+                                class="since-scope@if($lastWeekScopeIsActive) active@endif"
+                                href="{{ route($currentRoute, ['last-week']) }}">Last week</a> .
+                            <a
+                                class="since-scope@if($lastMonthScopeIsActive) active@endif"
+                                href="{{ route($currentRoute, ['last-month']) }}">Last month</a> .
+                            <a
+                                class="since-scope@if($lastYearScopeIsActive) active@endif"
+                                href="{{ route($currentRoute, ['last-year']) }}">Last year</a> .
+                            <a
+                                class="since-scope@if($allTimeScopeIsActive) active@endif"
+                                href="{{ route($currentRoute, ['all-time']) }}">All time</a>
+                        </div>
+                    @endif
+                </div>
 
                 <div class="panel-body posts">
 

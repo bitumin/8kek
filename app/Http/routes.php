@@ -12,7 +12,16 @@
 */
 
 Route::auth();
-Route::get('/', ['as' => 'home', 'uses' => 'MainController@home']);
+
+Route::get('/', ['as' => 'home', 'uses' => 'MainController@home']); //Newest first
+Route::get('/last', ['as' => 'home.last', 'uses' => 'MainController@home']); //Newest first
+Route::get('/old', ['as' => 'home.old', 'uses' => 'MainController@homeOld']); //Oldest first
+Route::get('/popular/{since?}', ['as' => 'home.popular', 'uses' => 'MainController@homePopular']); //Most viewed first
+Route::get('/obscure/{since?}', ['as' => 'home.obscure', 'uses' => 'MainController@homeObscure']); //Less viewed first
+Route::get('/praised/{since?}', ['as' => 'home.praised', 'uses' => 'MainController@homePraised']); //Highest up/down rate first
+Route::get('/vilified/{since?}', ['as' => 'home.vilified', 'uses' => 'MainController@homeVilified']); //Lowest up/down rate first
+Route::get('/controversial/{since?}', ['as' => 'home.controversial', 'uses' => 'MainController@homeControversial']); //Most voted + up/down rate closest to one first
+
 Route::get('post/{post}', ['as' => 'post', 'uses' => 'MainController@post']);
 Route::get('services/available/name', ['as' => 'services.available.name', 'uses' => 'MainController@nameIsAvailable']);
 Route::get('services/available/email', ['as' => 'services.available.email', 'uses' => 'MainController@emailIsAvailable']);
