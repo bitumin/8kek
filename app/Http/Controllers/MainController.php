@@ -27,7 +27,7 @@ class MainController extends Controller
     public function home()
     {
         $posts = DB::table('posts')
-            ->orderBy('created_at', 'desc')
+            ->latest()
             ->simplePaginate(6);
 
         return view('home', array_merge(
@@ -47,7 +47,7 @@ class MainController extends Controller
     public function homeOld()
     {
         $posts = DB::table('posts')
-            ->orderBy('created_at', 'asc')
+            ->oldest()
             ->simplePaginate(6);
 
         return view('home', array_merge(

@@ -37,11 +37,12 @@ class Post extends Model
      */
     public function scopePopular($query, $since, $reverse = false)
     {
-        $order = $reverse ? 'asc' : 'desc';
+        $viewsDirection = $reverse ? 'asc' : 'desc';
 
         if ($since === 'all-time') {
             return $query
-                ->orderBy('views', $order);
+                ->orderBy('views', $viewsDirection)
+                ->latest();
         } else {
             $todayDt = new Carbon();
 
@@ -60,7 +61,8 @@ class Post extends Model
 
             return $query
                 ->where('created_at', '>', $sinceDt)
-                ->orderBy('views', $order);
+                ->orderBy('views', $viewsDirection)
+                ->latest();
         }
     }
 
@@ -71,13 +73,15 @@ class Post extends Model
      */
     public function scopePraised($query, $since, $reverse = false)
     {
-        $order = $reverse ? 'asc' : 'desc';
-        $ratio = '*, up/(down+1) AS ratio';
+        $ratio = '*, up/(IF(down=0,1,down)) AS ratio';
+        $ratioDirection = $reverse ? 'asc' : 'desc';
+        $upDirection = $ratioDirection;
 
         if ($since === 'all-time') {
             return $query
                 ->selectRaw($ratio)
-                ->orderBy('ratio', $order);
+                ->orderBy('ratio', $ratioDirection)
+                ->orderBy('up', $upDirection);
         } else {
             $todayDt = new Carbon();
 
@@ -97,7 +101,8 @@ class Post extends Model
             return $query
                 ->selectRaw($ratio)
                 ->where('created_at', '>', $sinceDt)
-                ->orderBy('ratio', $order);
+                ->orderBy('ratio', $ratioDirection)
+                ->orderBy('up', $upDirection);
         }
     }
 
@@ -108,12 +113,13 @@ class Post extends Model
      */
     public function scopeControversial($query, $since)
     {
-        $ratio = '*, ABS(1.0 - up/(down+1)) AS rank';
+        $ratio = '*, ABS(1-up/IF(down=0,1,down)) AS rank';
 
         if ($since === 'all-time') {
             return $query
                 ->selectRaw($ratio)
-                ->orderByRaw('rank', 'asc');
+                ->orderBy('rank', 'asc')
+                ->orderBy('up', 'desc');
         } else {
             $todayDt = new Carbon();
 
@@ -133,7 +139,8 @@ class Post extends Model
             return $query
                 ->selectRaw($ratio)
                 ->where('created_at', '>', $sinceDt)
-                ->orderBy('rank', 'asc');
+                ->orderBy('rank', 'asc')
+                ->orderBy('up', 'desc');
         }
     }
 
