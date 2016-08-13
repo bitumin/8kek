@@ -30,6 +30,9 @@ Route::get('services/available/email', ['as' => 'services.available.email', 'use
 Route::post('services/upload/image', ['as' => 'services.upload.image', 'uses' => 'MainController@postImageUpload']);
 Route::post('services/upload/post', ['as' => 'services.upload.post', 'uses' => 'MainController@postUpload']);
 
+Route::post('services/vote/up', ['as' => 'services.vote.up', 'uses' => 'MainController@upVote']);
+Route::post('services/vote/down', ['as' => 'services.vote.down', 'uses' => 'MainController@downVote']);
+
 /*
  |--------------------------------------------------------------------------
  | SOCIAL LOGIN

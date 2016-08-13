@@ -195,12 +195,20 @@ class MainController extends Controller
     /**
      * Show an application post.
      *
+     * @param Request $request
      * @param Post $post
      * @return \Illuminate\Http\Response
+     * @throws \RuntimeException
      */
-    public function post(Post $post)
+    public function post(Request $request, Post $post)
     {
-        return view('post', ['post' => $post]);
+        $allowVote = !($request->session()->has('voted.posts')
+            && in_array($post->id, $request->session()->get('voted.posts'), false));
+
+        return view('post', [
+            'allowVote' => $allowVote,
+            'post' => $post
+        ]);
     }
 
     public function nameIsAvailable(Request $request)
@@ -252,5 +260,47 @@ class MainController extends Controller
         }
 
         return redirect()->route('home.last');
+    }
+
+    public function upVote(Requests\Vote $request) {
+        // one vote per session
+        if (
+            !$request->session()->has('voted.posts')
+            || !in_array($request->input('post-id'), $request->session()->get('voted.posts'), false)
+        ) {
+            $request->session()->push('voted.posts', $request->input('post-id'));
+        } else {
+            return response()->json(['status' => 'nook']);
+        }
+
+        $post = Post::find($request->input('post-id'));
+        ++$post->up;
+
+        if(!$post->save()) {
+            return response()->json(['status' => 'nook']);
+        }
+
+        return response()->json(['status' => 'ok', 'up-votes' => $post->up]);
+    }
+
+    public function downVote(Requests\Vote $request) {
+        // one vote per session
+        if (
+            !$request->session()->has('voted.posts')
+            || !in_array($request->input('post-id'), $request->session()->get('voted.posts'), false)
+        ) {
+            $request->session()->push('voted.posts', $request->input('post-id'));
+        } else {
+            return response()->json(['status' => 'nook']);
+        }
+
+        $post = Post::find($request->input('post-id'));
+        ++$post->down;
+
+        if(!$post->save()) {
+            return response()->json(['status' => 'nook']);
+        }
+
+        return response()->json(['status' => 'ok', 'down-votes' => $post->down]);
     }
 }

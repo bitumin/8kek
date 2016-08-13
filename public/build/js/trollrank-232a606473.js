@@ -1,4 +1,4 @@
-+(function($, w) {
++(function($, w, b) {
     $(function() { //on document ready...
         'use strict';
 
@@ -66,7 +66,34 @@
             }
         };
 
+        /*
+         * Up/down voting system
+         */
+        var $b = $(b);
+        $b.on('click', '#up-vote', function() {
+            $(this).addClass('disabled');
+            $('#down-vote').addClass('disabled');
+            $.post('/services/vote/up', {
+                '_token': $('input[name="_token"]').val(),
+                'post-id': parseInt($('input[name="post-id"]').val(), 10)
+            }, function(res) {
+                if (res['status'] === 'ok' && typeof(res['up-votes']) != "undefined")
+                    $('#up-votes').html(res['up-votes'] + ' downs');
+            });
+        });
+        $b.on('click', '#down-vote', function() {
+            $(this).addClass('disabled');
+            $('#up-vote').addClass('disabled');
+            $.post('/services/vote/down', {
+                '_token': $('input[name="_token"]').val(),
+                'post-id': parseInt($('input[name="post-id"]').val(), 10)
+            }, function(res) {
+                if (res['status'] === 'ok' && typeof(res['down-votes']) != "undefined")
+                    $('#down-votes').html(res['down-votes'] + ' downs');
+            });
+        });
+
     });
-})(jQuery, window);
+})(jQuery, window, window.document.body);
 
 //# sourceMappingURL=trollrank.js.map

@@ -34,7 +34,9 @@
                             <div><a href="/post/{{ $p->id }}">{{ $p->title }}</a></div>
                             <div>Posted at {{ $p->created_at }}</div>
                             <div class="image-container">
-                                <img class="img-responsive" alt="{{ $p->title }}" src="/image/{{ $p->image }}">
+                                <a href="/post/{{ $p->id }}">
+                                    <img class="img-responsive" alt="{{ $p->title }}" src="/image/{{ $p->image }}">
+                                </a>
                             </div>
                             <div>
                                 <span>{{ $p->views }} views</span> .

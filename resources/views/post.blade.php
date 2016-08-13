@@ -2,7 +2,11 @@
 
 @section('content')
 
-    <input class="hidden" name="post-id" id="post-id" value="{{ $post->id }}">
+    {{--CSRF token field--}}
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" title="_token">
+
+    {{--Post id--}}
+    <input class="hidden" name="post-id" value="{{ $post->id }}" title="post-id">
 
     <div class="container">
         <div class="row">
@@ -20,8 +24,14 @@
                         </div>
                         <div>
                             <span>{{ $post->views }} views</span> .
-                            <span>{{ $post->up }} ups</span> .
-                            <span>{{ $post->down }} downs</span>
+                            <span id="up-votes">{{ $post->up }} ups</span> .
+                            <span id="down-votes">{{ $post->down }} downs</span>
+                        </div>
+                        <div>
+                            <a id="up-vote" class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
+                                <i class="fa fa-thumbs-up"></i> Up</a>
+                            <a id="down-vote" class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
+                                <i class="fa fa-thumbs-down"></i> Down</a>
                         </div>
                         <div>
                             Comments
