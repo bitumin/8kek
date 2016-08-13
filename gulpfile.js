@@ -17,7 +17,7 @@ elixir(function (mix) {
     //outputs to public/css by default
     mix.sass([
         'app.scss'
-    ], 'public/css/trollrank.css');
+    ], 'public/css/8kek.css');
 
     //es6 to es5
     //assumes paths relative to resources/assets/js
@@ -31,9 +31,9 @@ elixir(function (mix) {
     //assumes paths relative to resources/assets/js
     //outputs to public/js/all.js by default
     mix.scripts([
+        'pwstrength.js',
         'app.js'
-        // 'forum.js'
-    ], 'public/js/trollrank.js');
+    ], 'public/js/8kek.js');
 
     //combine multiple js files into one, it tries to minify them
     //The resulting JavaScript will be placed in public/js/all.js
@@ -51,7 +51,7 @@ elixir(function (mix) {
     // <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
     // <script src="{{ elixir('js/app.js') }}"></script>
     mix.version([
-        'css/trollrank.css',
-        'js/trollrank.js'
+        'css/8kek.css',
+        'js/8kek.js'
     ]);
 });

@@ -1,5 +1,5 @@
 +(function($, w, b) {
-    $(function() { //on document ready...
+    $(document).ready(function() { //on document ready...
         'use strict';
 
         /*
@@ -17,7 +17,9 @@
                 progress: "#pwd-strength-viewport-progress"
             }
         };
-        $('#password-register').pwstrength(options);
+        var $passwordInput = $('input#password-register');
+        if ($passwordInput.length)
+            $passwordInput.pwstrength(options);
 
         /*
          * Infinite scrolling

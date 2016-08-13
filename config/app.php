@@ -166,6 +166,7 @@ return [
         Intervention\Image\ImageServiceProvider::class, //Image manipulation
         Laravel\Socialite\SocialiteServiceProvider::class, //OAuth interface
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class, //Recaptcha for registration
+        Bitumin\Comments\CommentsServiceProvider::class, //Comments system
     ],
 
     /*

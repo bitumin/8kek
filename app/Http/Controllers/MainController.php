@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Post;
 use DB;
-use File;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
