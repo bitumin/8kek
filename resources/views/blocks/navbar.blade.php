@@ -44,6 +44,11 @@
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:" data-toggle="modal" data-target="#newPost" data-backdrop="static">
+                            <i class="fa fa-cloud-upload"></i> New post
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Post;
 use DB;
+use File;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -218,5 +219,38 @@ class MainController extends Controller
         ]);
 
         return response('', 200);
+    }
+
+    public function postImageUpload(Requests\UploadPostImage $request) {
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $extension = $request->file('file')->guessExtension() ?: $request->file('file')->getClientOriginalExtension();
+            $destinationPath = public_path('image');
+            $fileName = uniqid($request->user()->id, false) . $extension;
+
+            $request->file('file')->move($destinationPath, $fileName);
+
+            $request->session()->put('imageUploadFilename', $fileName);
+
+            return response('', 200);
+        }
+
+        return response('', 400);
+    }
+
+    public function postUpload(Requests\UploadPost $request) {
+        if (!$request->session()->has('imageUploadFilename')) {
+            return response('', 400);
+        }
+
+        $post = Post::create([
+            'title' => $request->input('title'),
+            'image' => $request->session()->pull('imageUploadFilename')
+        ]);
+
+        if (!isset($post->id)) {
+            return response('', 400);
+        }
+
+        return redirect()->route('home.last');
     }
 }

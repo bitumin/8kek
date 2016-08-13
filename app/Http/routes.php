@@ -23,8 +23,12 @@ Route::get('/vilified/{since?}', ['as' => 'home.vilified', 'uses' => 'MainContro
 Route::get('/controversial/{since?}', ['as' => 'home.controversial', 'uses' => 'MainController@homeControversial']); //Most voted + up/down rate closest to one first
 
 Route::get('post/{post}', ['as' => 'post', 'uses' => 'MainController@post']);
+
 Route::get('services/available/name', ['as' => 'services.available.name', 'uses' => 'MainController@nameIsAvailable']);
 Route::get('services/available/email', ['as' => 'services.available.email', 'uses' => 'MainController@emailIsAvailable']);
+
+Route::post('services/upload/image', ['as' => 'services.upload.image', 'uses' => 'MainController@postImageUpload']);
+Route::post('services/upload/post', ['as' => 'services.upload.post', 'uses' => 'MainController@postUpload']);
 
 /*
  |--------------------------------------------------------------------------

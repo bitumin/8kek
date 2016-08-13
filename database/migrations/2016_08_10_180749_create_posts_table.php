@@ -16,9 +16,9 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('image');
-            $table->integer('up');
-            $table->integer('down');
-            $table->integer('views');
+            $table->integer('up')->default(0);
+            $table->integer('down')->default(0);
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }

@@ -29,4 +29,17 @@ body {
 .image-container {
   max-width: 500px; }
 
+.dropzone {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #777777; }
+
+.dz-message {
+  font-size: 20px; }
+
+#post-image-controllers {
+  display: block;
+  text-align: right; }
+
 /*# sourceMappingURL=trollrank.css.map */
