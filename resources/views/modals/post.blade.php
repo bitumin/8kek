@@ -9,43 +9,42 @@
 
             <div class="modal-body">
 
-                {{--Image upload via dropzone--}}
+                {{--Image upload dropzone--}}
                 <form action="{{ route('services.upload.image') }}" class="dropzone" id="image-dropzone">
                     {{--CSRF token--}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>
 
-                <form id="new-post" method="POST" action="{{ route('services.upload.post') }}" data-toggle="validator" data-focus="false">
-                    {{--CSRF token--}}
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div id="new-post-form-container" class="row hidden">
 
-                    {{--Post title--}}
-                    <div id="post-title" class="form-group{{ $errors->has('title') ? ' has-error' : '' }} has-feedback">
-                        <input id="title" type="text" class="form-control input-lg" name="title"
-                               placeholder="Post title"
-                               disabled="disabled"
-                               maxlength="140"
-                               value="{{ old('title') }}"
-                               required data-required-error="Post title is required">
-                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                        <span class="help-block with-errors">
-                            @if ($errors->has('title'))
-                                {{ $errors->first('title') }}
-                            @endif
-                        </span>
-                    </div>
+                    <form id="new-post" method="POST" action="{{ route('services.upload.post') }}" data-toggle="validator" data-focus="false">
+                        {{--CSRF token--}}
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                    {{--Recaptcha--}}
-                    {!! Recaptcha::render() !!}
+                        <div class="col-fixed-left-150">
+                            <div id="dropzone-preview-container" class="dropzone-preview"></div>
+                        </div>
 
-                    <span id="post-image-controllers">
-                        <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Cancel</button>
-                        <button id="btn-upload" type="submit" class="btn btn-lg btn-primary"><i class="fa fa-cloud-upload"></i> Send</button>
-                    </span>
-                </form>
+                        {{--Post title--}}
+                        <div id="post-title" class="col-left-offset-150 form-group">
+                            <textarea id="title" class="form-control input-lg" name="title"
+                                      placeholder="Post title..."
+                                      maxlength="140" rows="4"
+                                      required data-required-error="Post title is required"></textarea>
+                            <span class="help-block with-errors"></span>
+                        </div>
 
-            </div>
+                        <div id="post-image-controllers" class="col-xs-12">
+                            {{--Recaptcha--}}
+                            {!! Recaptcha::render() !!}
 
-        </div>
-    </div>
-</div>
+                            <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Cancel</button>
+                            <button id="btn-upload" type="submit" class="btn btn-lg btn-primary"><i class="fa fa-cloud-upload"></i> Send</button>
+                        </div>
+                    </form>
+
+                </div><!-- /.row -->
+            </div><!-- /.modal-body -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

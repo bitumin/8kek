@@ -40,6 +40,7 @@
             parallelUploads: 1,
             acceptedFiles: 'image/*',
             uploadMultiple: false,
+            previewsContainer: '#dropzone-preview-container',
             dictDefaultMessage: '<i class="fa fa-3x fa-cloud-upload"></i><br>Select or drop image here',
             dictInvalidFileType: 'Only images allowed',
             dictFileTooBig: 'Image must not exceed {{maxFilesize}} MB',
@@ -48,30 +49,19 @@
             init: function() {
                 var that = this;
 
-                // Allow only one image
-                this.on("maxfilesexceeded", function(file) {
-                    that.removeAllFiles();
-                    that.addFile(file);
-                });
-
-                // Disable post title input before an image is uploaded
+                // Show image preview and title form after image has been selected for upload
                 this.on("sending", function() {
-                    $('input[id=title]').attr('disabled', 'disabled');
-                    $('button[id=btn-upload]').addClass('disabled');
+                    $('form#image-dropzone').addClass('hidden');
+                    $('div#new-post-form-container').removeClass('hidden');
                 });
 
-                // Enable post title input when an image has been successfully uploaded
-                this.on("success", function() {
-                    $('input[id=title]').removeAttr('disabled');
-                    $('button[id=btn-upload]').removeClass('disabled');
-                    $('form[id=new-post]').validator('validate');
-                });
-
-                // Reset dropzone and new post form on modal hide/close
+                // Reset dropzone and title form on modal close
                 $('#newPost').on('hidden.bs.modal', function () {
                     that.removeAllFiles();
-                    $('input[id=title]').attr('disabled', 'disabled').val('');
-                    $('form[id=new-post]').validator('validate');
+                    $('textarea[id=title]').val('');
+                    $('form[id=new-post]').validator();
+                    $('form#image-dropzone').removeClass('hidden');
+                    $('div#new-post-form-container').addClass('hidden');
                 });
             }
         };
