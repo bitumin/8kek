@@ -25,7 +25,6 @@ class StoreCommentRequest extends Request
     {
         return [
             'post_id' => 'required|integer|exists:posts,id',
-            'user_id' => 'sometimes|required|integer|exists:users,id',
             'content' => 'required|string|alpha_dash|min:1|max:200',
             'g-recaptcha-response' => 'required|recaptcha'
         ];

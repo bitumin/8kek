@@ -28,10 +28,16 @@
                             <span id="down-votes">{{ $post->down }} downs</span>
                         </div>
                         <div>
-                            <a id="up-vote" class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
+                            <a href="javascript:" id="up-vote"
+                               class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
                                 <i class="fa fa-thumbs-up"></i> Up</a>
-                            <a id="down-vote" class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
+                            <a href="javascript:" id="down-vote"
+                               class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
                                 <i class="fa fa-thumbs-down"></i> Down</a>
+                            <a href="javascript:"id="post-comment"
+                               class="btn btn-default btn-lg"
+                               data-toggle="modal" data-target="#postComment" data-backdrop="false">
+                                <i class="fa fa-comment"></i> Comment</a>
                         </div>
 
                         <div class="comments-container">
@@ -46,4 +52,7 @@
             </div>
         </div>
     </div>
+
+    @include('modals.comment')
+
 @endsection

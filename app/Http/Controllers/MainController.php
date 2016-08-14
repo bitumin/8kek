@@ -198,6 +198,7 @@ class MainController extends Controller
      * @param Request $request
      * @param Post $post
      * @return \Illuminate\Http\Response
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public function post(Request $request, Post $post)
@@ -205,8 +206,11 @@ class MainController extends Controller
         $allowVote = !($request->session()->has('voted.posts')
             && in_array($post->id, $request->session()->get('voted.posts'), false));
 
-        $comments = Comment::where('post_id', $post->id)
+        $comments = DB::table('comments')
+            ->where('post_id', $post->id)
             ->latest()
+            ->leftJoin('users', 'comments.user_id', '=', 'users.id')
+            ->select('comments.*', 'users.name AS author')
             ->paginate(25);
 
         return view('post', [

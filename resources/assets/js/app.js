@@ -95,5 +95,9 @@
             });
         });
 
+        /*
+         * Post new comment
+         */
+        $b.on('click', '')
     });
 })(jQuery, window, window.document.body);
