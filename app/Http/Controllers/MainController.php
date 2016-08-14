@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use App\Comment;
 use App\Post;
+use App\Http\Requests;
 use DB;
 use Illuminate\Http\Request;
 
@@ -204,9 +205,14 @@ class MainController extends Controller
         $allowVote = !($request->session()->has('voted.posts')
             && in_array($post->id, $request->session()->get('voted.posts'), false));
 
+        $comments = Comment::where('post_id', $post->id)
+            ->latest()
+            ->paginate(25);
+
         return view('post', [
             'allowVote' => $allowVote,
-            'post' => $post
+            'post' => $post,
+            'comments' => $comments
         ]);
     }
 
@@ -228,7 +234,7 @@ class MainController extends Controller
         return response('', 200);
     }
 
-    public function postImageUpload(Requests\UploadPostImage $request) {
+    public function postImageUpload(Requests\UploadPostImageRequest $request) {
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $extension = $request->file('file')->guessExtension() ?: $request->file('file')->getClientOriginalExtension();
             $destinationPath = public_path('image');
@@ -244,7 +250,7 @@ class MainController extends Controller
         return response('', 400);
     }
 
-    public function postUpload(Requests\UploadPost $request) {
+    public function postUpload(Requests\UploadPostRequest $request) {
         if (!$request->session()->has('imageUploadFilename')) {
             return response('', 400);
         }

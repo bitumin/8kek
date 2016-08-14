@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Auth;
 
-class UploadPostImage extends Request
+class UploadPostImageRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -31,3 +31,12 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         'created_at' => $faker->dateTimeBetween('-2 years', 'now')
     ];
 });
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'post_id' => App\Post::inRandomOrder()->first()->id,
+        'user_id' => $faker->boolean(50) ? App\User::inRandomOrder()->first()->id : null,
+        'content' => $faker->text(),
+        'created_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ];
+});

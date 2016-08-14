@@ -33,9 +33,13 @@
                             <a id="down-vote" class="btn btn-default btn-lg{{ $allowVote ? '' : ' disabled' }}">
                                 <i class="fa fa-thumbs-down"></i> Down</a>
                         </div>
-                        <div>
-                            Comments
+
+                        <div class="comments-container">
+
+                            @include('comments')
+
                         </div>
+
                     </div>
 
                 </div>

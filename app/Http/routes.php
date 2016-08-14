@@ -47,3 +47,8 @@ Route::get('auth/facebook', ['as' => 'facebook.provider', 'uses' => 'Auth\AuthCo
 Route::get('auth/facebook/callback', ['as' => 'facebook.callback', 'uses' => 'Auth\AuthController@handleFacebookProviderCallback']);
 Route::get('auth/twitter', ['as' => 'twitter.provider', 'uses' => 'Auth\AuthController@redirectToTwitterProvider']);
 Route::get('auth/twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Auth\AuthController@handleTwitterProviderCallback']);
+
+/*
+ * Comments system
+ */
+Route::post('service/comments', ['as' => 'service.comments', 'uses' => 'CommentsController@postComment']);

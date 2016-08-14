@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Bitumin\Comments\Comment;
 
-class PostsTableSeeder extends Seeder
+class CommentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Post::class, 100)->create();
+        factory(App\Comment::class, 1000)->create();
     }
 }
