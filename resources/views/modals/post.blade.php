@@ -10,14 +10,14 @@
             <div class="modal-body">
 
                 {{--Image upload dropzone--}}
-                <form action="{{ route('services.upload.image') }}" class="dropzone" id="image-dropzone">
+                <form action="{{ route('api.upload.image') }}" class="dropzone" id="image-dropzone">
                     {{--CSRF token--}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>
 
                 <div id="new-post-form-container" class="row hidden">
 
-                    <form id="new-post" method="POST" action="{{ route('services.upload.post') }}" data-toggle="validator" data-focus="false">
+                    <form id="new-post" method="POST" action="{{ route('api.upload.post') }}" data-toggle="validator" data-focus="false">
                         {{--CSRF token--}}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

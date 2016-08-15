@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Auth;
 
-class UploadPostImageRequest extends Request
+class CommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UploadPostImageRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -25,7 +24,9 @@ class UploadPostImageRequest extends Request
     public function rules()
     {
         return [
-            'file' => 'image|max:2000'
+            'post_id' => 'required|integer|exists:posts,id',
+            'content' => 'required|string|alpha_dash|min:1|max:200',
+            'g-recaptcha-response' => 'required|recaptcha'
         ];
     }
 }

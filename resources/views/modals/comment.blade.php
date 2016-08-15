@@ -9,9 +9,12 @@
 
             <div class="modal-body">
 
-                <form id="new-post" method="POST" action="{{ route('services.upload.post') }}" data-toggle="validator" data-focus="false">
+                <form id="new-post" method="POST" action="{{ route('api.comment') }}" data-toggle="validator" data-focus="false">
                     {{--CSRF token--}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                    {{--Post id--}}
+                    <input class="hidden" name="post_id" value="{{ $post->id }}" title="post_id">
 
                     {{--Post title--}}
                     <div id="post-content" class="form-group">

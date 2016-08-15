@@ -25,8 +25,8 @@ class UploadPostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|string|alpha_dash|min:3|max:140',
-            'g-recaptcha-response' => 'required|recaptcha'
+            'title' => 'required|string|alpha_dash|min:3|max:140'
+            , 'g-recaptcha-response' => 'required|recaptcha'
         ];
     }
 }

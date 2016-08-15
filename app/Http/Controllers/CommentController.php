@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
-use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\CommentRequest;
+use Auth;
 
-class CommentsController extends Controller
+class CommentController extends Controller
 {
-    public function postComment(StoreCommentRequest $request)
+    public function postComment(CommentRequest $request)
     {
         $comment = Comment::create([
             'post_id' => $request->input('post_id'),
-            'user_id' => $request->has('user_id') ? $request->input('user_id') : null,
+            'user_id' => Auth::check() ? Auth::user()->id : null,
             'content' => $request->input('content')
         ]);
 
@@ -19,6 +20,6 @@ class CommentsController extends Controller
             return response('', 500);
         }
 
-        return response('ok', 200);
+        return redirect()->route('post', $request->input('post_id'));
     }
 }

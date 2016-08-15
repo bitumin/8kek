@@ -2,24 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
 use App\Post;
-use App\Http\Requests;
-use DB;
 use Illuminate\Http\Request;
+use DB;
 
-class MainController extends Controller
+class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('auth'); //only for "control panel" pages?
-    }
-
     /**
      * Show the application home page. Newest first.
      *
@@ -190,126 +178,5 @@ class MainController extends Controller
             ],
             $this->sinceParams($since)
         ));
-    }
-
-    /**
-     * Show an application post.
-     *
-     * @param Request $request
-     * @param Post $post
-     * @return \Illuminate\Http\Response
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     */
-    public function post(Request $request, Post $post)
-    {
-        $allowVote = !($request->session()->has('voted.posts')
-            && in_array($post->id, $request->session()->get('voted.posts'), false));
-
-        $comments = DB::table('comments')
-            ->where('post_id', $post->id)
-            ->latest()
-            ->leftJoin('users', 'comments.user_id', '=', 'users.id')
-            ->select('comments.*', 'users.name AS author')
-            ->paginate(25);
-
-        return view('post', [
-            'allowVote' => $allowVote,
-            'post' => $post,
-            'comments' => $comments
-        ]);
-    }
-
-    public function nameIsAvailable(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|unique:users'
-        ]);
-
-        return response('', 200);
-    }
-
-    public function emailIsAvailable(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|unique:users'
-        ]);
-
-        return response('', 200);
-    }
-
-    public function postImageUpload(Requests\UploadPostImageRequest $request) {
-        if ($request->hasFile('file') && $request->file('file')->isValid()) {
-            $extension = $request->file('file')->guessExtension() ?: $request->file('file')->getClientOriginalExtension();
-            $destinationPath = public_path('image');
-            $fileName = uniqid($request->user()->id, false) . $extension;
-
-            $request->file('file')->move($destinationPath, $fileName);
-
-            $request->session()->put('imageUploadFilename', $fileName);
-
-            return response('', 200);
-        }
-
-        return response('', 400);
-    }
-
-    public function postUpload(Requests\UploadPostRequest $request) {
-        if (!$request->session()->has('imageUploadFilename')) {
-            return response('', 400);
-        }
-
-        $post = Post::create([
-            'title' => $request->input('title'),
-            'image' => $request->session()->pull('imageUploadFilename')
-        ]);
-
-        if (!isset($post->id)) {
-            return response('', 400);
-        }
-
-        return redirect()->route('home.last');
-    }
-
-    public function upVote(Requests\Vote $request) {
-        // one vote per session
-        if (
-            !$request->session()->has('voted.posts')
-            || !in_array($request->input('post-id'), $request->session()->get('voted.posts'), false)
-        ) {
-            $request->session()->push('voted.posts', $request->input('post-id'));
-        } else {
-            return response()->json(['status' => 'nook']);
-        }
-
-        $post = Post::find($request->input('post-id'));
-        ++$post->up;
-
-        if(!$post->save()) {
-            return response()->json(['status' => 'nook']);
-        }
-
-        return response()->json(['status' => 'ok', 'up-votes' => $post->up]);
-    }
-
-    public function downVote(Requests\Vote $request) {
-        // one vote per session
-        if (
-            !$request->session()->has('voted.posts')
-            || !in_array($request->input('post-id'), $request->session()->get('voted.posts'), false)
-        ) {
-            $request->session()->push('voted.posts', $request->input('post-id'));
-        } else {
-            return response()->json(['status' => 'nook']);
-        }
-
-        $post = Post::find($request->input('post-id'));
-        ++$post->down;
-
-        if(!$post->save()) {
-            return response()->json(['status' => 'nook']);
-        }
-
-        return response()->json(['status' => 'ok', 'down-votes' => $post->down]);
     }
 }

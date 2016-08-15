@@ -21,7 +21,7 @@
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} has-feedback">
                             <input id="name" type="text" class="form-control input-lg" name="name" value="{{ old('name') }}"
                                    placeholder="Trollname / Nom de guerre"
-                                   data-remote="{{ route('services.available.name') }}" data-remote-error="Trollname already taken"
+                                   data-remote="{{ route('api.available.name') }}" data-remote-error="Trollname already taken"
                                    pattern="^[A-Za-z0-9_]{1,20}$" data-pattern-error="Does not follow the pattern [A-Za-z0-9_]{1,20}"
                                    required data-required-error="Trollname required"
                                    maxlength="20">
@@ -37,7 +37,7 @@
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
                             <input id="email" type="email" class="form-control input-lg" name="email" value="{{ old('email') }}"
                                    placeholder="E-mail address"
-                                   data-remote="{{ route('services.available.email') }}" data-remote-error="An account with this e-mail already exists"
+                                   data-remote="{{ route('api.available.email') }}" data-remote-error="An account with this e-mail already exists"
                                    required data-required-error="E-mail required"
                                    data-error="Doesn't even look like an e-mail address, try harder"
                                    maxlength="255">

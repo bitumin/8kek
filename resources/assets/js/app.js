@@ -75,7 +75,7 @@
         $b.on('click', '#up-vote', function() {
             $(this).addClass('disabled');
             $('#down-vote').addClass('disabled');
-            $.post('/services/vote/up', {
+            $.post('/api/vote/up', {
                 '_token': $('input[name="_token"]').val(),
                 'post-id': parseInt($('input[name="post-id"]').val(), 10)
             }, function(res) {
@@ -86,7 +86,7 @@
         $b.on('click', '#down-vote', function() {
             $(this).addClass('disabled');
             $('#up-vote').addClass('disabled');
-            $.post('/services/vote/down', {
+            $.post('/api/vote/down', {
                 '_token': $('input[name="_token"]').val(),
                 'post-id': parseInt($('input[name="post-id"]').val(), 10)
             }, function(res) {
