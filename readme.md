@@ -1,27 +1,34 @@
-# Laravel PHP Framework
+# 8kek
+## A Laravelian 9gag clone
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+I had some free hours during summer vacations and I thought: 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+> Hey, let's just clone 9gag the Laravel way
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+This is the unpolished result out of it.
 
-## Official Documentation
+### Packages that I added in composer.json
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+* "laravel/framework" - Laravel 5.2, for obvious reasons 
+* "intervention/image" - I was planning to manipulate the uploaded images with this package... Guess what, I didn't, but it's here nonetheless just in case
+* "laravel/socialite" - Handle social login
+* "greggilbert/recaptcha" - To try to avoid the spam in both sign ups and posting
+* Plus several dev packages for the sake of rapid development/debugging: ide-helper, debug-bar, generators
 
-## Contributing
+### Actual developments
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+* Models and database: post and comments models, factories, seeders and table migrations
+* Basic Requests and Controllers to handle post posting, post voting, registration, traditional and social login...
+* Views: made some neat login and register views, a single layout, a pair of modals and two extra main views: home and post views
+* Other resources: Some basic sass/css and javascript magic, plus the proper gulp tasks to build and publish the resulting minified files
 
-## Security Vulnerabilities
+### Contributing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+To make this clone closer to a production cloned version of 9gag someone would have to invest some extra development time. And I don't think it's gonna be me.
 
-## License
+Things that need some work:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+* To finish the social login controllers
+* User dashboard page to handle user data
+* A good looking front-end
+* A good comments system 
