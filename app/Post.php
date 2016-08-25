@@ -73,7 +73,7 @@ class Post extends Model
      */
     public function scopePraised($query, $since, $reverse = false)
     {
-        $ratio = '*, up/(IF(down=0,1,down)) AS ratio';
+        $ratio = '*, IF(down=0,up,up/down) AS ratio';
         $ratioDirection = $reverse ? 'asc' : 'desc';
         $upDirection = $ratioDirection;
 
@@ -113,7 +113,7 @@ class Post extends Model
      */
     public function scopeControversial($query, $since)
     {
-        $ratio = '*, ABS(1-up/IF(down=0,1,down)) AS rank';
+        $ratio = '*, ABS(LOG(up/down)) AS rank';
 
         if ($since === 'all-time') {
             return $query

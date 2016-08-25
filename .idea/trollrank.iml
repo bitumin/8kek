@@ -235,7 +235,6 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="validator" level="application" />
-    <orderEntry type="library" name="trollrank node_modules" level="project" />
     <orderEntry type="library" name="pwstrength" level="application" />
     <orderEntry type="library" name="jquery.jscroll" level="application" />
     <orderEntry type="library" name="dropzone" level="application" />
